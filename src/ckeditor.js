@@ -83,6 +83,18 @@ ClassicEditor.defaultConfig = {
 			'mergeTableCells'
 		]
 	},
+	link: {
+		decorators: {
+			addTargetToLinks: {
+				mode: 'manual',
+				label: 'Open in a new tab',
+				attributes: {
+					target: '_blank',
+					rel: 'noopener noreferrer'
+				}
+			}
+		}
+	},
 	// This value must be kept in sync with the language defined in webpack.config.js.
 	language: 'en'
 };
