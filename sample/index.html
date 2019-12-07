@@ -28,7 +28,32 @@
 
 <script src="/assets/ckeditor.js"></script>
 <script>
-	ClassicEditor.create( document.querySelector( '#editor' ) )
+	ClassicEditor.create( document.querySelector( '#editor' ), {
+		toolbar: {
+			items: [
+				'heading',
+				'|',
+				'bold',
+				'italic',
+				'link',
+				'bulletedList',
+				'numberedList',
+				'|',
+				'indent',
+				'outdent',
+				'|',
+				'blockQuote',
+				'insertTable',
+				'undo',
+				'redo',
+				// Override default toolbar items by adding placeholder for demo
+				'placeholder'
+			]
+		},
+		placeholderConfig: {
+			types: [ 'date', 'color', 'first name', 'surname' ]
+		}
+	} )
 		.then( editor => {
 			window.editor = editor;
 		} )
