@@ -30,7 +30,7 @@ export default class PlaceholderEditing extends Plugin {
 			)
 		);
 		this.editor.config.define( 'placeholderConfig', {
-			types: [ 'date', 'first name', 'surname' ]
+			types: []
 		} );
 	}
 

@@ -51,7 +51,26 @@
 			]
 		},
 		placeholderConfig: {
-			types: [ 'date', 'color', 'first name', 'surname' ]
+			types: {
+				broker: {
+					first_name: "Broker's First Name",
+					last_name: "Broker's Last Name",
+					brand: {
+						name: 'Broker Brand name',
+						website: 'Broker Brand Website',
+						logo: 'Broker Brand Logo',
+						fact_find_online: 'Broker Brand Fact Find',
+					},
+				},
+				client: {
+					first_name: "Client's First Name",
+					last_name: "Client's Last Name",
+					nickname: "Client's Nickname",
+				},
+				others: {
+					salutation: 'Email Salutation',
+				},
+			}
 		}
 	} )
 		.then( editor => {

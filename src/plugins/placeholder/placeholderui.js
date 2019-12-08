@@ -45,19 +45,24 @@ export default class PlaceholderUI extends Plugin {
 function getDropdownItemsDefinitions( placeholderNames ) {
 	const itemDefinitions = new Collection();
 
-	for ( const name of placeholderNames ) {
-		const definition = {
-			type: 'button',
-			model: new Model( {
-				commandParam: name,
-				label: name,
-				withText: true
-			} )
-		};
+	const addtoCollection = ( placeholder, parent ) =>
+		Object.keys( placeholder ).forEach( type => {
+			const commandParam = parent ? `${ parent }.${ type }` : type;
+			if ( typeof placeholder[ type ] === 'string' ) {
+				// Add the item definition to the collection.
+				return itemDefinitions.add( {
+					type: 'button',
+					model: new Model( {
+						commandParam,
+						label: placeholder[ type ],
+						withText: true
+					} )
+				} );
+			}
+			addtoCollection( placeholder[ type ], commandParam );
+		} );
 
-		// Add the item definition to the collection.
-		itemDefinitions.add( definition );
-	}
+	addtoCollection( placeholderNames );
 
 	return itemDefinitions;
 }
