@@ -1,12 +1,15 @@
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
-import { addListToDropdown, createDropdown } from '@ckeditor/ckeditor5-ui/src/dropdown/utils';
+import {
+	addListToDropdown,
+	createDropdown
+} from '@ckeditor/ckeditor5-ui/src/dropdown/utils';
 import Collection from '@ckeditor/ckeditor5-utils/src/collection';
 import Model from '@ckeditor/ckeditor5-ui/src/model';
+import placeholderIcon from './theme/placeholder.svg';
 
 export default class PlaceholderUI extends Plugin {
 	init() {
 		const editor = this.editor;
-		const t = editor.t;
 		const placeholderNames = editor.config.get( 'placeholderConfig.types' );
 
 		// The "placeholder" dropdown must be registered among the UI components of the editor
@@ -21,11 +24,9 @@ export default class PlaceholderUI extends Plugin {
 			);
 
 			dropdownView.buttonView.set( {
-				// The t() function helps localize the editor. All strings enclosed in t() can be
-				// translated and change when the language of the editor changes.
-				label: t( 'Placeholder' ),
-				tooltip: true,
-				withText: true
+				label: 'Insert Placeholder',
+				icon: placeholderIcon,
+				tooltip: true
 			} );
 
 			// Execute the command when the dropdown item is clicked (executed).
