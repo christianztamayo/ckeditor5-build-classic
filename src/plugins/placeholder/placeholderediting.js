@@ -14,6 +14,12 @@ export default class PlaceholderEditing extends Plugin {
 	}
 
 	init() {
+		this.editor.config.define( 'placeholderConfig', {
+			types: [],
+			startMarker: '{',
+			endMarker: '}'
+		} );
+
 		this._defineSchema();
 		this._defineConverters();
 
@@ -29,9 +35,6 @@ export default class PlaceholderEditing extends Plugin {
 				viewElement => viewElement.hasClass( 'placeholder' )
 			)
 		);
-		this.editor.config.define( 'placeholderConfig', {
-			types: []
-		} );
 	}
 
 	_defineSchema() {
@@ -54,6 +57,10 @@ export default class PlaceholderEditing extends Plugin {
 
 	_defineConverters() {
 		const conversion = this.editor.conversion;
+		const startMarker = this.editor.config.get(
+			'placeholderConfig.startMarker'
+		);
+		const endMarker = this.editor.config.get( 'placeholderConfig.endMarker' );
 
 		conversion.for( 'upcast' ).elementToElement( {
 			view: {
@@ -61,8 +68,10 @@ export default class PlaceholderEditing extends Plugin {
 				classes: [ 'placeholder' ]
 			},
 			model: ( viewElement, modelWriter ) => {
-				// Extract the "name" from "{name}".
-				const name = viewElement.getChild( 0 ).data.slice( 1, -1 );
+				// Extract the "name" from "(startMarker)name(endMarker)".
+				const name = viewElement
+					.getChild( 0 )
+					.data.slice( startMarker.length, -endMarker.length );
 
 				return modelWriter.createElement( 'placeholder', { name } );
 			}
@@ -95,7 +104,9 @@ export default class PlaceholderEditing extends Plugin {
 			} );
 
 			// Insert the placeholder name (as a text).
-			const innerText = viewWriter.createText( '{' + name + '}' );
+			const innerText = viewWriter.createText(
+				`${ startMarker }${ name }${ endMarker }`
+			);
 			viewWriter.insert(
 				viewWriter.createPositionAt( placeholderView, 0 ),
 				innerText
