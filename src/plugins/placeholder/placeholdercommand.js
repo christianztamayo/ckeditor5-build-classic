@@ -12,9 +12,6 @@ export default class PlaceholderCommand extends Command {
 
 			// ... and insert it into the document.
 			editor.model.insertContent( placeholder );
-
-			// Put the selection on the inserted element.
-			writer.setSelection( placeholder, 'on' );
 		} );
 	}
 
